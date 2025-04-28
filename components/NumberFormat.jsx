@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "./NumberFormat.css"
 import numberToWords from "number-to-words"
 
@@ -47,7 +47,7 @@ export default function NumberFormat() {
     setHexadecimal(Math.floor(decimalValue).toString(16).toUpperCase())
     setOctal(Math.floor(decimalValue).toString(8))
 
-    //console.log(typeof Math.floor(decimalValue).toString(16).toUpperCase());
+    console.log( Math.floor(decimalValue).toString(16).toUpperCase());
 
     //Setting number-to-word
     if (decimalValue <= 1000000000000000)
@@ -137,6 +137,10 @@ export default function NumberFormat() {
 
     return roundedNumber
   }
+
+  // useEffect(() => {
+  //     handleConversion(); 
+  // }, [])
 
   //UI
   return (
@@ -280,7 +284,7 @@ export default function NumberFormat() {
             {inputFormat === "hexadecimal" ? "10" : "16"}) of integer {integer}
           </p>
           <input
-            type="number"
+            type="text"
             value={inputFormat === "hexadecimal" ? decimal : hexadecimal}
             onChange={(e) => {}}
           />
