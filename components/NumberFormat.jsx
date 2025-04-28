@@ -143,7 +143,10 @@ export default function NumberFormat() {
       <div className="section">
         <div className="row">
           <p>Number Format</p>
-          <select value={0} onChange={0}>
+          <select
+            value={inputFormat}
+            onChange={(e) => setInputFormat(e.target.value)}
+          >
             <option value="binary">Binary</option>
             <option value="octal">Octal</option>
             <option value="decimal">Decimal</option>
@@ -152,24 +155,57 @@ export default function NumberFormat() {
         </div>
 
         <div className="row">
-          <p>Enter {0} Number</p>
+          <p>Enter {inputFormat} Number</p>
           <div>
-            <input type={0} value={0} onChange={0} />
-            <button onClick={0}>Convert</button>
+            <input
+              type={inputFormat !== "decimal" ? "text" : "number"}
+              value={inputNumber}
+              onChange={(e) => {
+                if (inputFormat === "decimal") {
+                  setDecimal(e.target.value)
+                  setInputNumber(e.target.value)
+                } else setInputNumber(e.target.value)
+              }}
+            />
+            <button onClick={handleConversion}>Convert</button>
           </div>
         </div>
 
         <div className="row">
           <p>Integer Number</p>
-          <input type="number" value={0} onChange={0} />
+          <input type="number" value={integer} onChange={(e) => {}} />
         </div>
 
         <div className="row">
           <p>Significant Number</p>
           <div>
-            <input type="number" value={0} onChange={0} />
-            <select value={0} onChange={0}>
-              {Array}
+            <input type="number" value={significantNo} onChange={(e) => {}} />
+            <select
+              value={significantNoIndex}
+              onChange={(e) => {
+                setSignificantNoIndex(e.target.value)
+                if (decimal !== "")
+                  //non-initial state condition
+                  setSignificantNo(
+                    roundToSignificantDigits(
+                      parseFloat(decimal, 10),
+                      parseInt(e.target.value)
+                    )
+                  )
+              }}
+            >
+              {/* Creates an array of 9 numbers: [0,1,2,3,4,5,6,7,8], Maps each number to an <option> showing 1-9. 
+            
+            Array(9) -> Creates a new array with 9 empty [ , , , , , , , , ]
+            ...Array(9) -> The spread operator ... "expands" those empty slots into actual undefined values so you can work with them.
+            .keys() ->gives you an iterator over the array's indexes, Basically [0, 1, 2, 3, 4, 5, 6, 7, 8].
+            
+            */}
+              {[...Array(9).keys()].map((value) => (
+                <option key={value + 1} value={value + 1}>
+                  {value + 1}
+                </option>
+              ))}
             </select>
           </div>
         </div>
@@ -177,9 +213,25 @@ export default function NumberFormat() {
         <div className="row">
           <p>Rounded Number</p>
           <div>
-            <input type="number" value={0} onChange={0} />
-            <select value={0} onChange={0}>
-              {Array}
+            <input type="number" value={roundDigit} onChange={(e) => {}} />
+            <select
+              value={roundDigitIndex}
+              onChange={(e) => {
+                setRoundDigitIndex(e.target.value)
+                if (decimal !== "")
+                  setRoundDigit(
+                    roundToKthInteger(
+                      parseFloat(decimal),
+                      parseInt(e.target.value, 10)
+                    )
+                  )
+              }}
+            >
+              {[...Array(9).keys()].map((value) => (
+                <option key={value + 1} value={value + 1}>
+                  {value + 1}
+                </option>
+              ))}
             </select>
           </div>
         </div>
@@ -187,37 +239,54 @@ export default function NumberFormat() {
         <div className="row">
           <p>Fraction</p>
           <div>
-            <input type="number" value={0} onChange={0} />
+            <input type="number" value={integer} onChange={(e) => {}} />
+
+            <input type="number" value={numerator} onChange={(e) => {}} />
             <p>&nbsp;/&nbsp;</p>
-            <input type="number" value={0} onChange={0} />
-            <input type="number" value={0} onChange={0} />
+            <input type="number" value={denominator} onChange={(e) => {}} />
           </div>
         </div>
 
         <div className="row">
           <p>
-            {0} of integer {0}
+            {inputFormat === "binary" ? "Decimal" : "Binary"} Format(Base-
+            {inputFormat === "binary" ? "10" : "2"}) of integer {integer}
           </p>
-          <input type="number" value={0} onChange={0} />
+          <input
+            type="number"
+            value={inputFormat === "binary" ? decimal : binary}
+            onChange={(e) => {}}
+          />
         </div>
 
         <div className="row">
           <p>
-            {0} of integer {0}
+            {inputFormat === "octal" ? "Decimal" : "Binary"} Format(Base-
+            {inputFormat === "octal" ? "10" : "8"}) of integer {integer}
           </p>
-          <input type="number" value={0} onChange={0} />
+          <input
+            type="number"
+            value={inputFormat === "octal" ? decimal : octal}
+            onChange={(e) => {}}
+          />
         </div>
 
         <div className="row">
           <p>
-            {0} of integer {0}
+            {inputFormat === "hexadecimal" ? "Decimal" : "Hexadecimal"}{" "}
+            Format(Base-
+            {inputFormat === "hexadecimal" ? "10" : "16"}) of integer {integer}
           </p>
-          <input type="number" value={0} onChange={0} />
+          <input
+            type="number"
+            value={inputFormat === "hexadecimal" ? decimal : hexadecimal}
+            onChange={(e) => {}}
+          />
         </div>
 
         <div className="row">
-          <p>In words</p>
-          <input type="text" value={0} onChange={0} />
+          <p>In words {integer}</p>
+          <input type="text" value={inWord} onChange={() => {}} />
         </div>
       </div>
     </div>
