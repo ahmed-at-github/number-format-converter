@@ -47,6 +47,8 @@ export default function NumberFormat() {
     setHexadecimal(Math.floor(decimalValue).toString(16).toUpperCase())
     setOctal(Math.floor(decimalValue).toString(8))
 
+    //console.log(typeof Math.floor(decimalValue).toString(16).toUpperCase());
+
     //Setting number-to-word
     if (decimalValue <= 1000000000000000)
       setInWord(numberToWords.toWords(decimalValue))
@@ -86,7 +88,7 @@ export default function NumberFormat() {
       setSignificantNo(
         roundToSignificantDigits(
           parseFloat(decimal, 10),
-          parseint(significantNoIndex, 10)
+          parseInt(significantNoIndex, 10)
         )
       )
     else
@@ -142,7 +144,7 @@ export default function NumberFormat() {
       <h1>Number Format Converter</h1>
       <div className="section">
         <div className="row">
-          <p>Number Format</p>
+          <p>Select Number Format</p>
           <select
             value={inputFormat}
             onChange={(e) => setInputFormat(e.target.value)}
@@ -249,7 +251,7 @@ export default function NumberFormat() {
 
         <div className="row">
           <p>
-            {inputFormat === "binary" ? "Decimal" : "Binary"} Format(Base-
+            {inputFormat === "binary" ? "Decimal" : "Binary"} Format (Base-
             {inputFormat === "binary" ? "10" : "2"}) of integer {integer}
           </p>
           <input
@@ -261,7 +263,7 @@ export default function NumberFormat() {
 
         <div className="row">
           <p>
-            {inputFormat === "octal" ? "Decimal" : "Binary"} Format(Base-
+            {inputFormat === "octal" ? "Decimal" : "Octal"} Format (Base-
             {inputFormat === "octal" ? "10" : "8"}) of integer {integer}
           </p>
           <input
@@ -273,8 +275,8 @@ export default function NumberFormat() {
 
         <div className="row">
           <p>
-            {inputFormat === "hexadecimal" ? "Decimal" : "Hexadecimal"}{" "}
-            Format(Base-
+            {inputFormat === "hexadecimal" ? "Decimal" : "Hexadecimal"} Format
+            (Base-
             {inputFormat === "hexadecimal" ? "10" : "16"}) of integer {integer}
           </p>
           <input
@@ -285,7 +287,7 @@ export default function NumberFormat() {
         </div>
 
         <div className="row">
-          <p>In words {integer}</p>
+          <p>integer {integer} in words </p>
           <input type="text" value={inWord} onChange={() => {}} />
         </div>
       </div>
