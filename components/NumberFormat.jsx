@@ -37,7 +37,7 @@ export default function NumberFormat() {
       default:
         decimalValue = parseInt(inputNumber, 10)
     }
-    if (inputFormat !== "decimal") setDecimal(decimalValue) //??
+    if (inputFormat !== "decimal") setDecimal(decimalValue) 
 
     //Finding Integer value
     setInteger(Math.floor(decimalValue))
@@ -47,7 +47,7 @@ export default function NumberFormat() {
     setHexadecimal(Math.floor(decimalValue).toString(16).toUpperCase())
     setOctal(Math.floor(decimalValue).toString(8))
 
-    console.log( Math.floor(decimalValue).toString(16).toUpperCase());
+   // console.log( Math.floor(decimalValue).toString(16).toUpperCase());
 
     //Setting number-to-word
     if (decimalValue <= 1000000000000000)
@@ -55,13 +55,15 @@ export default function NumberFormat() {
     else setInWord("Over Limit (Max-Limit : 1000000000000000")
 
     //Round Number
-    if (inputFormat === "decimal")
+    if (inputFormat === "decimal") {
+      // console.log("here");
       setRoundDigit(
         roundToKthInteger(
           parseFloat(decimal, 10),
           parseInt(roundDigitIndex, 10)
         )
       )
+    }
     else
       setRoundDigit(
         roundToKthInteger(
@@ -70,13 +72,17 @@ export default function NumberFormat() {
         )
       )
 
+   
+      // console.log(typeof decimal);
+      
+
     //Fraction
     if (
       inputFormat === "decimal" &&
       parseFloat(decimal, 10) - decimalValue !== 0
     ) {
       const result = floatToFraction(parseFloat(decimal, 10) - decimalValue)
-      setNumerator(result.Numerator)
+      setNumerator(result.numerator)
       setDenominator(result.denominator)
     } else {
       setNumerator(0)
@@ -84,13 +90,15 @@ export default function NumberFormat() {
     }
 
     //Significant Number
-    if (inputFormat === "decimal")
+    if (inputFormat === "decimal") {
+      console.log(decimal);
+      
       setSignificantNo(
         roundToSignificantDigits(
           parseFloat(decimal, 10),
           parseInt(significantNoIndex, 10)
         )
-      )
+      )}
     else
       setSignificantNo(
         roundToSignificantDigits(
